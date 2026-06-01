@@ -1,20 +1,21 @@
 /* =========================
    DATA INITIALIZATION
 ========================= */
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://localhost:5001/api";
 
 const apps = [
   { id: "teams", name: "Teams", color: "#6264a7", connected: true },
   { id: "slack", name: "Slack", color: "#e01e5a", connected: true },
   { id: "outlook", name: "Outlook", color: "#0078d4", connected: true },
-  { id: "zalo", name: "Zalo", color: "#0068ff", connected: false },
+  { id: "zalo", name: "Zalo", color: "#0068ff", connected: true },
   { id: "discord", name: "Discord", color: "#5865f2", connected: false }
 ];
 
 let notifications = [
   { id: 1, app: "teams", sender: "Nguyễn Văn A", message: "Bạn được nhắc đến trong cuộc họp AI Vision.", time: "5 phút trước", date: "Hôm nay", read: false },
   { id: 2, app: "slack", sender: "Backend Team", message: "API notification-service đã deploy thành công lên môi trường Staging.", time: "20 phút trước", date: "Hôm nay", read: false },
-  { id: 3, app: "outlook", sender: "Phòng nhân sự", message: "Lịch phỏng vấn tuần này đã được cập nhật. Vui lòng kiểm tra.", time: "Hôm qua lúc 16:20", date: "Hôm qua", read: true }
+  { id: 3, app: "outlook", sender: "Phòng nhân sự", message: "Lịch phỏng vấn tuần này đã được cập nhật. Vui lòng kiểm tra.", time: "Hôm qua lúc 16:20", date: "Hôm qua", read: true },
+  { id: 4, app: "zalo", sender: "Phòng Kinh Doanh", message: "Danh sách khách hàng mới đã được đồng bộ vào hệ thống Zalo mock.", time: "30 phút trước", date: "Hôm nay", read: false }
 ];
 
 const fallbackNotifications = [...notifications];

@@ -11,7 +11,7 @@ const notificationRoutes = require('./routes/notifications');
 const { pool } = require('./config');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -41,6 +41,20 @@ try {
 try {
   const teamsRoutes = require('./routes/platforms/teams');
   app.use('/api/platforms/teams', teamsRoutes);
+} catch (e) {
+  // route file may not exist yet during initial setup
+}
+
+try {
+  const outlookRoutes = require('./routes/platforms/outlook');
+  app.use('/api/platforms/outlook', outlookRoutes);
+} catch (e) {
+  // route file may not exist yet during initial setup
+}
+
+try {
+  const zaloRoutes = require('./routes/platforms/zalo');
+  app.use('/api/platforms/zalo', zaloRoutes);
 } catch (e) {
   // route file may not exist yet during initial setup
 }
