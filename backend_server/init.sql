@@ -17,6 +17,20 @@ CREATE TABLE IF NOT EXISTS notifications (
     INDEX idx_created_at (created_at)
 );
 
+-- Create platform_tokens table
+CREATE TABLE IF NOT EXISTS platform_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    platform VARCHAR(50) NOT NULL,
+    team_id VARCHAR(255) NULL,
+    access_token TEXT NOT NULL,
+    refresh_token TEXT NULL,
+    scope TEXT NULL,
+    expires_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_platform_team (platform, team_id),
+    INDEX idx_platform_created (platform, created_at)
+);
+
 -- Insert sample data
 INSERT INTO
     notifications (
