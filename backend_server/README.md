@@ -102,7 +102,7 @@ OAuth flow:
 
 ```bash
 # Start login/consent in browser
-http://localhost:5001/api/platforms/teams/oauth/start
+http://localhost:5000/api/platforms/teams/oauth/start
 ```
 
 After consent, the callback stores the Graph token in `platform_tokens` and, if `TEAMS_SUBSCRIPTION_RESOURCE` plus `TEAMS_NOTIFICATION_URL` are configured, it auto-creates a Graph subscription.
@@ -110,7 +110,7 @@ After consent, the callback stores the Graph token in `platform_tokens` and, if 
 Manual subscription setup:
 
 ```bash
-curl -X POST 'http://localhost:5001/api/platforms/teams/subscriptions' \
+curl -X POST 'http://localhost:5000/api/platforms/teams/subscriptions' \
   -H 'Content-Type: application/json' \
   -d '{"resource":"/chats/getAllMessages","notificationUrl":"https://<your-ngrok-host>/api/platforms/teams/webhook"}'
 ```
@@ -374,7 +374,7 @@ Supported payload fields:
 Example request:
 
 ```bash
-curl -X POST 'http://localhost:5001/api/platforms/teams/webhook' \
+curl -X POST 'http://localhost:5000/api/platforms/teams/webhook' \
   -H 'Content-Type: application/json' \
   -d '{"from":{"displayName":"Project Lead"},"subject":"Sprint Review","body":{"content":"Teams integration check"},"createdDateTime":"2026-05-26T08:30:00.000Z"}'
 ```

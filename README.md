@@ -110,7 +110,7 @@ mysql -u root -p < backend_server/init.sql
 
 ### 4️⃣ Start the Servers
 
-**Terminal 1 - Backend (Port 5000):**
+**Terminal 1 - Backend + Frontend (Port 5000):**
 
 ```bash
 cd backend_server
@@ -118,16 +118,11 @@ npm start
 # Or with auto-reload: npm run dev
 ```
 
-**Terminal 2 - Frontend (Port 8080):**
-
-```bash
-npx http-server -p 8080
-# Or if installed globally: http-server -p 8080
-```
+Frontend is served directly by the backend at the same port, so no separate frontend server is required.
 
 ### 5️⃣ Access the Application
 
-- 🌐 **Frontend:** http://localhost:8080
+- 🌐 **Frontend:** http://localhost:5000
 - 🔌 **Backend API:** http://localhost:5000
 - 📚 **API Docs:** http://localhost:5000/api/info
 

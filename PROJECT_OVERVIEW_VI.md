@@ -3,6 +3,7 @@
 ## 🎯 Mục Đích Project
 
 **NotificationHub** là một hệ thống quản lý thông báo tập trung (Notification Aggregation System) giúp:
+
 - 📨 Gom nhất các thông báo từ 4 nền tảng khác nhau (Outlook, Slack, Teams, Discord)
 - 🗂️ Sắp xếp và hiển thị theo cách dễ hiểu (Vietnamese timestamp, date grouping)
 - ✅ Quản lý trạng thái đã đọc/chưa đọc
@@ -15,7 +16,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    FRONTEND (Port 8080)                      │
+│                    FRONTEND (Port 5000)                      │
 │                                                               │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │  index.html                                          │   │
@@ -97,8 +98,9 @@
 ## 📊 Data Flow - Dòng Chảy Dữ Liệu
 
 ### 1️⃣ **User mở Frontend**
+
 ```
-User truy cập http://localhost:8080
+User truy cập http://localhost:5000
               ↓
    index.html được tải
               ↓
@@ -109,6 +111,7 @@ User truy cập http://localhost:8080
 ```
 
 ### 2️⃣ **Server xử lý GET /api/notifications**
+
 ```
 Frontend request
     ↓
@@ -116,8 +119,8 @@ routes/notifications.js
     ↓
 notificationController.getNotifications()
     ↓
-Lấy dữ liệu từ MySQL: 
-  SELECT * FROM notifications 
+Lấy dữ liệu từ MySQL:
+  SELECT * FROM notifications
   WHERE (platform = ? if filtered)
   LIMIT ? OFFSET ?
     ↓
@@ -136,6 +139,7 @@ app.js render lên giao diện
 ```
 
 ### 3️⃣ **User đánh dấu đã đọc**
+
 ```
 User click vào nút "Đánh dấu đã đọc"
     ↓
@@ -153,6 +157,7 @@ Frontend cập nhật UI
 ```
 
 ### 4️⃣ **User xóa thông báo trùng lặp**
+
 ```
 User click "Xóa Trùng Lặp"
     ↓
@@ -182,6 +187,7 @@ Response success
 ## 🔄 Data Normalization - Chuẩn Hóa Dữ Liệu
 
 ### Vấn Đề
+
 Mỗi platform (Outlook, Slack, Teams, Discord) có cấu trúc dữ liệu khác nhau:
 
 ```
@@ -196,7 +202,7 @@ OUTLOOK:
 SLACK:
 {
   user: "U123456",
-  channel: "C123456", 
+  channel: "C123456",
   text: "Great project!",
   ts: "1705420200.000100"  ← Unix timestamp
 }
@@ -211,6 +217,7 @@ TEAMS:
 ```
 
 ### Giải Pháp
+
 ```javascript
 // dataNormalizer.js chuẩn hóa tất cả thành format chung:
 
@@ -233,6 +240,7 @@ TEAMS:
 ## 🕐 Timestamp Formatting - Định Dạng Thời Gian
 
 ### Time Ago Format (Thời gian tương đối)
+
 ```javascript
 formatTimeAgo(timestamp):
   - Vừa xong             (< 1 phút)
@@ -243,6 +251,7 @@ formatTimeAgo(timestamp):
 ```
 
 ### Date Format (Ngày tháng)
+
 ```javascript
 formatDate(timestamp):
   - Hôm nay              (Hôm nay)
@@ -257,6 +266,7 @@ formatDate(timestamp):
 ## 🔍 Duplicate Detection - Phát Hiện Trùng Lặp
 
 ### Thuật Toán
+
 ```
 Bước 1: Tìm EXACT DUPLICATES
         Hash từng notification
@@ -264,21 +274,22 @@ Bước 1: Tìm EXACT DUPLICATES
 
 Bước 2: Tìm SIMILAR NOTIFICATIONS
         So sánh từng cặp:
-        
+
         - Kiểm tra sender similarity:
           Dùng Levenshtein distance
-          "John Doe" vs "John Do" → similarity > 95%? 
+          "John Doe" vs "John Do" → similarity > 95%?
           → Có thể là người cùng 1
-        
+
         - Kiểm tra message similarity:
           "Great project" vs "Great project!" → similarity > 85%?
           → Có thể là nội dung cùng 1
-        
+
         - Nếu cả 2 điều kiện đúng:
           → Xóa 1 notification
 ```
 
 ### Ví Dụ
+
 ```
 Notification A:
   sender: "John Doe"
@@ -291,7 +302,7 @@ Notification B:
 Similarity Check:
   - sender: "John Doe" vs "Jon Doe" = 85% (< 95%) ❌
   - message: 95% similarity (> 85%) ✅
-  
+
   Result: Không xóa vì sender không giống
 ```
 
@@ -300,6 +311,7 @@ Similarity Check:
 ## 📡 API Endpoints - 10 Endpoint
 
 ### 1. **GET /api/notifications** - Lấy danh sách thông báo
+
 ```
 Query params:
   ?page=1&limit=10          - Phân trang
@@ -332,6 +344,7 @@ Response:
 ```
 
 ### 2. **GET /api/notifications/stats** - Thống kê
+
 ```
 Response:
 {
@@ -351,6 +364,7 @@ Response:
 ```
 
 ### 3. **GET /api/notifications/grouped** - Gom theo ngày
+
 ```
 Response:
 {
@@ -369,6 +383,7 @@ Response:
 ```
 
 ### 4. **GET /api/notifications/:id** - Lấy 1 thông báo
+
 ```
 Response:
 {
@@ -378,6 +393,7 @@ Response:
 ```
 
 ### 5. **PUT /api/notifications/:id/read** - Đánh dấu 1 thông báo
+
 ```
 Body:
 { "is_read": true }
@@ -387,6 +403,7 @@ Response:
 ```
 
 ### 6. **PUT /api/notifications/batch/read** - Batch update
+
 ```
 Body:
 {
@@ -399,12 +416,14 @@ Response:
 ```
 
 ### 7. **DELETE /api/notifications/:id** - Xóa 1 thông báo
+
 ```
 Response:
 { success: true, message: "Deleted" }
 ```
 
 ### 8. **POST /api/notifications/deduplicate** - Xóa trùng lặp
+
 ```
 Response:
 {
@@ -417,12 +436,14 @@ Response:
 ```
 
 ### 9. **GET /api/health** - Health check
+
 ```
 Response:
 { status: "OK", timestamp: "..." }
 ```
 
 ### 10. **GET /api/info** - Thông tin API
+
 ```
 Response:
 {
@@ -437,6 +458,7 @@ Response:
 ## 🛠️ Tech Stack - Công Nghệ Sử Dụng
 
 ### Backend
+
 ```
 Express.js 4.18.2
   ↓ (Framework web tạo server HTTP)
@@ -455,6 +477,7 @@ cors 2.8.5
 ```
 
 ### Frontend
+
 ```
 HTML5 - Tạo cấu trúc trang
 CSS3 - Styling responsive
@@ -462,6 +485,7 @@ Vanilla JavaScript - Xử lý logic (không cần framework)
 ```
 
 ### Database
+
 ```
 MySQL 5.7+
   - Table: notifications
@@ -473,12 +497,14 @@ MySQL 5.7+
 ## 🚀 Cách Chạy Project
 
 ### Bước 1: Install Dependencies
+
 ```bash
 cd backend_server
 npm install
 ```
 
 ### Bước 2: Tạo .env
+
 ```env
 DB_HOST=localhost
 DB_USER=root
@@ -489,6 +515,7 @@ NODE_ENV=development
 ```
 
 ### Bước 3: Start Backend
+
 ```bash
 cd backend_server
 npm start
@@ -496,14 +523,15 @@ npm start
 ```
 
 ### Bước 4: Start Frontend
+
 ```bash
 # Terminal khác
-npx http-server -p 8080
-# Chạy trên port 8080
+Frontend được phục vụ trực tiếp từ backend trên port 5000.
 ```
 
 ### Bước 5: Truy cập
-- Frontend: http://localhost:8080
+
+- Frontend: http://localhost:5000
 - Backend API: http://localhost:5000
 - API Info: http://localhost:5000/api/info
 
@@ -564,11 +592,13 @@ CREATE TABLE notifications (
 ## 🧪 Ví Dụ Sử Dụng - Examples
 
 ### Lấy tất cả thông báo chưa đọc từ Slack
+
 ```bash
 curl "http://localhost:5000/api/notifications?platform=slack&status=unread&page=1&limit=5"
 ```
 
 ### Đánh dấu multiple notifications đã đọc
+
 ```bash
 curl -X PUT http://localhost:5000/api/notifications/batch/read \
   -H "Content-Type: application/json" \
@@ -579,11 +609,13 @@ curl -X PUT http://localhost:5000/api/notifications/batch/read \
 ```
 
 ### Xóa thông báo trùng lặp
+
 ```bash
 curl -X POST http://localhost:5000/api/notifications/deduplicate
 ```
 
 ### Lấy thông báo gom theo ngày
+
 ```bash
 curl http://localhost:5000/api/notifications/grouped
 ```
@@ -592,40 +624,47 @@ curl http://localhost:5000/api/notifications/grouped
 
 ## 🎯 8 Tính Năng Chính - Features
 
-| # | Tính Năng | Vị Trí Code | Mô Tả |
-|---|-----------|-----------|-------|
-| 1 | Phân trang | `notificationController.getNotifications()` | Lấy dữ liệu theo page/limit |
-| 2 | Chuẩn hóa dữ liệu | `dataNormalizer.js` | Chuyển 4 format khác nhau thành 1 format chung |
-| 3 | Định dạng response | `responseFormatter.js` | Đóng gói dữ liệu thành JSON chuẩn |
-| 4 | Định dạng thời gian | `timestampFormatter.js` | Thời gian tiếng Việt ("5 phút trước", "Hôm nay") |
-| 5 | Xóa trường thừa | `dataNormalizer.removeRedundantData()` | Chỉ giữ những trường cần thiết |
-| 6 | Icon & color | `dataNormalizer.js` | Map icon/color cho mỗi platform |
-| 7 | Quản lý trạng thái | `markAsRead()`, `updateMultipleReadStatus()` | Đánh dấu đã đọc/chưa đọc |
-| 8 | Phát hiện trùng lặp | `duplicateDetector.js` | Tìm và xóa notifications trùng (Levenshtein algorithm) |
+| #   | Tính Năng           | Vị Trí Code                                  | Mô Tả                                                  |
+| --- | ------------------- | -------------------------------------------- | ------------------------------------------------------ |
+| 1   | Phân trang          | `notificationController.getNotifications()`  | Lấy dữ liệu theo page/limit                            |
+| 2   | Chuẩn hóa dữ liệu   | `dataNormalizer.js`                          | Chuyển 4 format khác nhau thành 1 format chung         |
+| 3   | Định dạng response  | `responseFormatter.js`                       | Đóng gói dữ liệu thành JSON chuẩn                      |
+| 4   | Định dạng thời gian | `timestampFormatter.js`                      | Thời gian tiếng Việt ("5 phút trước", "Hôm nay")       |
+| 5   | Xóa trường thừa     | `dataNormalizer.removeRedundantData()`       | Chỉ giữ những trường cần thiết                         |
+| 6   | Icon & color        | `dataNormalizer.js`                          | Map icon/color cho mỗi platform                        |
+| 7   | Quản lý trạng thái  | `markAsRead()`, `updateMultipleReadStatus()` | Đánh dấu đã đọc/chưa đọc                               |
+| 8   | Phát hiện trùng lặp | `duplicateDetector.js`                       | Tìm và xóa notifications trùng (Levenshtein algorithm) |
 
 ---
 
 ## ❓ FAQ - Các Câu Hỏi Thường Gặp
 
 ### Q: Dữ liệu từ đâu ra?
+
 A: Hiện tại là dữ liệu giả mạo (sample data) trong `init.sql`. Trong production, backend sẽ kết nối trực tiếp với API của Outlook, Slack, Teams, Discord để lấy data thực.
 
 ### Q: Làm sao phát hiện trùng lặp?
+
 A: Dùng 2 bước:
+
 1. Hash giống nhau → Xóa ngay
 2. Levenshtein distance: So sánh độ tương đồng của sender + message
 
 ### Q: Tại sao chia utils thành 4 file?
+
 A: Single Responsibility - Mỗi file chỉ làm 1 việc:
+
 - `dataNormalizer` = chuẩn hóa
 - `timestampFormatter` = định dạng thời gian
 - `duplicateDetector` = phát hiện trùng
 - `responseFormatter` = định dạng response
 
 ### Q: Connection pooling là gì?
+
 A: Tạo sẵn 10 connections đến MySQL, tái sử dụng thay vì tạo mới mỗi lần. Nhanh hơn!
 
 ### Q: Tại sao có demo mode?
+
 A: Nếu MySQL không khả dụng, server vẫn chạy bình thường với sample data. Cho phép dev mà không cần setup MySQL.
 
 ---
@@ -675,7 +714,7 @@ A: Nếu MySQL không khả dụng, server vẫn chạy bình thường với sa
 ## 🔄 Development Workflow - Quy Trình Phát Triển
 
 ```
-1. User mở frontend (http://localhost:8080)
+1. User mở frontend (http://localhost:5000)
    ↓
 2. Frontend tự động gọi API:
    GET /api/notifications?page=1&limit=10
@@ -706,7 +745,7 @@ A: Nếu MySQL không khả dụng, server vẫn chạy bình thường với sa
 ## ✅ Checklist Kiểm Tra
 
 - [x] Backend chạy trên port 5000
-- [x] Frontend chạy trên port 8080
+- [x] Frontend chạy trên port 5000
 - [x] API /health return OK
 - [x] API /notifications return dữ liệu
 - [x] Pagination hoạt động

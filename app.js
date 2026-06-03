@@ -1,7 +1,7 @@
 /* =========================
    DATA INITIALIZATION
 ========================= */
-const API_BASE_URL = "http://localhost:5001/api";
+const API_BASE_URL = "http://localhost:5000/api";
 
 const apps = [
   { id: "teams", name: "Teams", color: "#6264a7", connected: true },
