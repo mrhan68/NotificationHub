@@ -59,6 +59,13 @@ try {
   // route file may not exist yet during initial setup
 }
 
+try {
+  const discordRoutes = require('./routes/platforms/discord');
+  app.use('/api/platforms/discord', discordRoutes);
+} catch (e) {
+  // route file may not exist yet during initial setup
+}
+
 // API info endpoint
 app.get('/api/info', (req, res) => {
   res.json({

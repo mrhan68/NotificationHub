@@ -81,4 +81,32 @@ VALUES (
         'Test Results',
         'Kết quả test e2e đã có sẵn. Vui lòng review.',
         1
+    ),
+    (
+        'discord',
+        'DatDo',
+        '#general',
+        'Chào cả nhà, hệ thống NotificationHub đã tích hợp xong Discord mock rồi nhé!',
+        0
+    ),
+    (
+        'discord',
+        'PhuongThao',
+        '#projects',
+        'Mọi người nhớ hoàn thành task đúng hạn nha.',
+        0
+    ),
+    (
+        'discord',
+        'Long',
+        '#gaming',
+        'Tối nay 9h làm trận game giải trí đi anh em ơi!',
+        1
+    ),
+    (
+        'discord',
+        'HR Bot',
+        '#announcements',
+        'Thông báo: Ngày mai công ty có tiệc teambuilding lúc 15:00.',
+        0
     );
