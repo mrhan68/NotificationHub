@@ -1,7 +1,7 @@
--- Insert Discord Mock Data
+-- Insert Discord Mock Data (Japanese)
 INSERT INTO public.notifications (source, external_id, title, message, sender, received_at, is_read)
 VALUES
-('discord', 'discord-mock-1', '#general', 'Chào cả nhà, hệ thống NotificationHub đã tích hợp xong Discord mock rồi nhé!', 'DatDo', NOW() - INTERVAL '5 minutes', false),
-('discord', 'discord-mock-2', '#projects', 'Mọi người nhớ hoàn thành task đúng hạn nha.', 'PhuongThao', NOW() - INTERVAL '2 hours', false),
-('discord', 'discord-mock-3', '#gaming', 'Tối nay 9h làm trận game giải trí đi anh em ơi!', 'Long', NOW() - INTERVAL '1 day', true),
-('discord', 'discord-mock-4', '#announcements', 'Thông báo: Ngày mai công ty có tiệc teambuilding lúc 15:00.', 'HR Bot', NOW() - INTERVAL '3 days', false);
+('discord', 'discord-mock-1', '#general', 'みなさん、NotificationHubへのDiscordモック統合が完了しました！', 'DatDo', NOW() - INTERVAL '5 minutes', false),
+('discord', 'discord-mock-2', '#projects', 'タスクを期限内に完了させることを忘れないでください。', 'PhuongThao', NOW() - INTERVAL '2 hours', false),
+('discord', 'discord-mock-3', '#gaming', '今夜21時にゲームで息抜きしましょう！', 'Long', NOW() - INTERVAL '1 day', true),
+('discord', 'discord-mock-4', '#announcements', 'お知らせ：明日15:00より会社のチームビルディングイベントがあります。', 'HR Bot', NOW() - INTERVAL '3 days', false);

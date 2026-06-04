@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS platform_tokens (
     INDEX idx_platform_created (platform, created_at)
 );
 
--- Insert sample data
+-- Insert sample data (Japanese)
 INSERT INTO
     notifications (
         platform,
@@ -38,71 +38,71 @@ INSERT INTO
     )
 VALUES (
         'teams',
-        'Nguyễn Văn A',
+        '田中 太郎',
         'AI Vision Meeting',
-        'Bạn được nhắc đến trong cuộc họp AI Vision.',
+        'AI Visionミーティングであなたへの言及がありました。',
         0
     ),
     (
         'slack',
         'Backend Team',
         'API Deployment',
-        'API notification-service đã deploy thành công lên môi trường Staging.',
+        'notification-service APIがステージング環境へのデプロイに成功しました。',
         0
     ),
     (
         'outlook',
-        'Phòng nhân sự',
+        '人事部',
         'Interview Schedule',
-        'Lịch phỏng vấn tuần này đã được cập nhật. Vui lòng kiểm tra.',
+        '今週の面接スケジュールが更新されました。ご確認ください。',
         1
     ),
     (
         'zalo',
-        'Phòng Kinh Doanh',
+        '営業部',
         'Customer Update',
-        'Danh sách khách hàng mới đã được đồng bộ vào hệ thống Zalo mock.',
+        '新規顧客リストがZaloモックシステムに同期されました。',
         0
     ),
     (
         'teams',
-        'Trần Thị B',
+        '鈴木 花子',
         'Project Update',
-        'Cập nhật tiến độ dự án phần mềm quản lý kho hàng',
+        '倉庫管理ソフトウェアプロジェクトの進捗が更新されました。',
         0
     ),
     (
         'slack',
         'QA Team',
         'Test Results',
-        'Kết quả test e2e đã có sẵn. Vui lòng review.',
+        'E2Eテスト結果が出ました。レビューをお願いします。',
         1
     ),
     (
         'discord',
         'DatDo',
         '#general',
-        'Chào cả nhà, hệ thống NotificationHub đã tích hợp xong Discord mock rồi nhé!',
+        'みなさん、NotificationHubへのDiscordモック統合が完了しました！',
         0
     ),
     (
         'discord',
         'PhuongThao',
         '#projects',
-        'Mọi người nhớ hoàn thành task đúng hạn nha.',
+        'タスクを期限内に完了させることを忘れないでください。',
         0
     ),
     (
         'discord',
         'Long',
         '#gaming',
-        'Tối nay 9h làm trận game giải trí đi anh em ơi!',
+        '今夜21時にゲームで息抜きしましょう！',
         1
     ),
     (
         'discord',
         'HR Bot',
         '#announcements',
-        'Thông báo: Ngày mai công ty có tiệc teambuilding lúc 15:00.',
+        'お知らせ：明日15:00より会社のチームビルディングイベントがあります。',
         0
     );
