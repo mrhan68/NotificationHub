@@ -14,17 +14,17 @@ const apps = [
 ];
 
 let notifications = [
-  { id: 1, app: "teams", sender: "Nguyễn Văn A", message: "Bạn được nhắc đến trong cuộc họp AI Vision.", time: "5 phút trước", date: "Hôm nay", read: false },
-  { id: 2, app: "slack", sender: "Backend Team", message: "API notification-service đã deploy thành công lên môi trường Staging.", time: "20 phút trước", date: "Hôm nay", read: false },
-  { id: 3, app: "outlook", sender: "Phòng nhân sự", message: "Lịch phỏng vấn tuần này đã được cập nhật. Vui lòng kiểm tra.", time: "Hôm qua lúc 16:20", date: "Hôm qua", read: true },
-  { id: 4, app: "zalo", sender: "Phòng Kinh Doanh", message: "Danh sách khách hàng mới đã được đồng bộ vào hệ thống Zalo mock.", time: "30 phút trước", date: "Hôm nay", read: false }
+  { id: 1, app: "teams", sender: "田中 太郎", message: "AI Visionミーティングであなたへの言及がありました。", time: "5分前", date: "今日", read: false },
+  { id: 2, app: "slack", sender: "バックエンドチーム", message: "notification-service APIがステージング環境へのデプロイに成功しました。", time: "20分前", date: "今日", read: false },
+  { id: 3, app: "outlook", sender: "人事部", message: "今週の面接スケジュールが更新されました。ご確認ください。", time: "昨日 16:20", date: "昨日", read: true },
+  { id: 4, app: "zalo", sender: "営業部", message: "新規顧客リストがZaloモックシステムに同期されました。", time: "30分前", date: "今日", read: false }
 ];
 
 const fallbackNotifications = [...notifications];
 
 let selectedStatus = "all";
 let selectedApp = "all";
-let notificationIdToDelete = null; // Lưu trữ tạm thời ID thông báo chuẩn bị xóa
+let notificationIdToDelete = null; // 削除予定の通知IDを一時保存
 
 /* =========================
    DOM ELEMENTS
@@ -57,14 +57,14 @@ function renderApps() {
         <div class="app-name">${app.name}</div>
       </div>
       <button class="connect-btn ${app.connected ? 'connected' : 'not-connected'}" data-app="${app.id}">
-        ${app.connected ? "Ngắt kết nối" : "Kết nối"}
+        ${app.connected ? "切断" : "接続"}
       </button>
     </div>
   `).join("");
 }
 
 function renderAppFilters() {
-  let html = `<button class="app-filter-btn ${selectedApp === 'all' ? 'active' : ''}" data-app="all">Tất cả ứng dụng</button>`;
+  let html = `<button class="app-filter-btn ${selectedApp === 'all' ? 'active' : ''}" data-app="all">すべてのアプリ</button>`;
 
   apps.filter(app => app.connected).forEach(app => {
     html += `<button class="app-filter-btn ${selectedApp === app.id ? 'active' : ''}" data-app="${app.id}">${app.name}</button>`;
@@ -85,8 +85,8 @@ function groupByDate(data) {
 function mapApiNotification(notification) {
   const sender = notification.sender || notification.from?.displayName || notification.username || notification.user || notification.subject || notification.platform || "Unknown";
   const message = notification.message || notification.text || notification.bodyPreview || notification.subject || "";
-  const time = notification.timeAgo || notification.timestamp || "Vừa xong";
-  const date = notification.date || "Hôm nay";
+  const time = notification.timeAgo || notification.timestamp || "たった今";
+  const date = notification.date || "今日";
 
   return {
     id: notification.id,
@@ -136,7 +136,7 @@ async function loadNotifications() {
       notifications = fallbackNotifications;
     }
   } catch (error) {
-    console.warn("Không tải được dữ liệu từ backend, dùng mock data:", error);
+    console.warn("バックエンドからデータを取得できませんでした。モックデータを使用します:", error);
     notifications = fallbackNotifications;
   }
 
@@ -154,7 +154,7 @@ function renderNotifications() {
   });
 
   if (filtered.length === 0) {
-    notificationsContainer.innerHTML = `<div style="text-align:center; padding: 40px; color:#64748b; font-weight:600;">Không có thông báo nào</div>`;
+    notificationsContainer.innerHTML = `<div style="text-align:center; padding: 40px; color:#64748b; font-weight:600;">通知はありません</div>`;
     return;
   }
 
@@ -182,8 +182,8 @@ function renderNotifications() {
               <!-- Thay thế bánh răng thành dấu 3 chấm dọc mã hóa HTML -->
               <button class="menu-btn" data-id="${n.id}">&#8942;</button>
               <div class="dropdown-menu" id="menu-${n.id}">
-                <div class="dropdown-item mark-action" data-id="${n.id}">${n.read ? 'Đánh dấu chưa đọc' : 'Đánh dấu đã đọc'}</div>
-                <div class="dropdown-item delete-notification" data-id="${n.id}">Xóa thông báo</div>
+                <div class="dropdown-item mark-action" data-id="${n.id}">${n.read ? '未読にする' : '既読にする'}</div>
+                <div class="dropdown-item delete-notification" data-id="${n.id}">通知を削除</div>
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ function openDetailModal(notification) {
   detailBadge.style.background = app.color;
 
   detailSender.innerText = notification.sender || "Unknown";
-  detailSubject.innerText = notification.subject || "Không có tiêu đề";
+  detailSubject.innerText = notification.subject || "件名なし";
   detailMessage.innerText = notification.message || "";
   detailTime.innerText = notification.time || "";
 
@@ -300,7 +300,7 @@ notificationsContainer.addEventListener("click", (e) => {
       })
       .catch(err => {
         console.error('Failed to update read status:', err);
-        alert('Cập nhật trạng thái không thành công: ' + (err.message || err));
+        alert('ステータスの更新に失敗しました: ' + (err.message || err));
         // revert optimistic change
         const m = notifications.find(item => item.id === id);
         if (m) { m.read = !newRead; renderNotifications(); }
@@ -351,7 +351,7 @@ notificationsContainer.addEventListener("click", (e) => {
         })
         .catch(err => {
           console.error('Failed to mark as read:', err);
-          alert('Không thể đánh dấu là đã đọc: ' + (err.message || err));
+          alert('既読にできませんでした: ' + (err.message || err));
           // revert
           n.read = prev;
           renderNotifications();
@@ -396,7 +396,7 @@ btnConfirmDelete.addEventListener("click", () => {
       })
       .catch(err => {
         console.error('Failed to delete notification:', err);
-        alert('Xóa không thành công: ' + (err.message || err));
+        alert('削除に失敗しました: ' + (err.message || err));
         // close modal and reset selection to avoid stuck state
         deleteModal.classList.remove("show");
         notificationIdToDelete = null;

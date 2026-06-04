@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,7 @@
       <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-title">Notification Hub</div>
-        <div class="section-title">Ứng dụng kết nối</div>
+        <div class="section-title">接続中のアプリ</div>
         <div class="app-list" id="appList"></div>
       </aside>
 
@@ -20,10 +20,9 @@
       <main class="main-content">
         <!-- HEADER -->
         <div class="header">
-          <h1>Thông báo tổng hợp</h1>
+          <h1>通知センター</h1>
           <p>
-            Theo dõi tất cả thông báo từ các nền tảng của bạn trong một nơi duy
-            nhất.
+            すべてのプラットフォームからの通知を一か所でまとめて確認できます。
           </p>
         </div>
 
@@ -31,8 +30,8 @@
         <div class="controls-container">
           <!-- STATUS FILTER -->
           <div class="filter-group">
-            <button class="filter-btn active" data-status="all">Tất cả</button>
-            <button class="filter-btn" data-status="unread">Chưa đọc</button>
+            <button class="filter-btn active" data-status="all">すべて</button>
+            <button class="filter-btn" data-status="unread">未読</button>
           </div>
 
           <!-- APP FILTER -->
@@ -44,20 +43,19 @@
       </main>
     </div>
 
-    <!-- CUSTOM MODAL POP-UP (XÁC NHẬN XÓA) -->
+    <!-- CUSTOM MODAL POP-UP (削除確認) -->
     <div class="modal-overlay" id="deleteModal">
       <div class="modal-box">
         <div class="modal-header">
-          <h3>Xác nhận xóa</h3>
+          <h3>削除の確認</h3>
         </div>
         <div class="modal-body">
-          Bạn có chắc chắn muốn xóa thông báo này không? Hành động này không thể
-          hoàn tác.
+          この通知を削除してもよろしいですか？この操作は元に戻せません。
         </div>
         <div class="modal-footer">
-          <button class="modal-btn btn-cancel" id="btnCancelDelete">Hủy</button>
+          <button class="modal-btn btn-cancel" id="btnCancelDelete">キャンセル</button>
           <button class="modal-btn btn-confirm" id="btnConfirmDelete">
-            Xóa ngay
+            今すぐ削除
           </button>
         </div>
       </div>
@@ -69,7 +67,7 @@
         <div class="modal-header">
           <div>
             <span id="detailBadge" class="badge">Teams</span>
-            <h3 id="detailSender">Người gửi</h3>
+            <h3 id="detailSender">送信者</h3>
           </div>
 
           <button class="close-detail-btn" id="closeDetailModal">✕</button>
