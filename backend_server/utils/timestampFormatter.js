@@ -1,10 +1,10 @@
 /**
- * Timestamp Formatter - Định dạng timestamp theo cách thân thiện với người dùng
+ * Timestamp Formatter - ユーザーフレンドリーな形式でタイムスタンプをフォーマット
  */
 
-const vietnameseMonths = [
-  'tháng 1', 'tháng 2', 'tháng 3', 'tháng 4', 'tháng 5', 'tháng 6',
-  'tháng 7', 'tháng 8', 'tháng 9', 'tháng 10', 'tháng 11', 'tháng 12'
+const japaneseMonths = [
+  '1月', '2月', '3月', '4月', '5月', '6月',
+  '7月', '8月', '9月', '10月', '11月', '12月'
 ];
 
 function toValidDate(timestamp) {
@@ -21,18 +21,18 @@ function toValidDate(timestamp) {
 }
 
 /**
- * Format timestamp dạng thân thiện: "5 phút trước", "Hôm qua lúc 16:20"
+ * タイムスタンプをフレンドリー形式でフォーマット: "5分前", "昨日 16:20"
  */
 function formatTimeAgo(timestamp) {
   const date = toValidDate(timestamp);
   if (!date) {
-    return 'Vừa xong';
+    return 'たった今';
   }
 
   const now = new Date();
   const diffMs = now - date;
   if (diffMs <= 0) {
-    return 'Vừa xong';
+    return 'たった今';
   }
   const diffSeconds = Math.floor(diffMs / 1000);
   const diffMinutes = Math.floor(diffSeconds / 60);
@@ -40,65 +40,65 @@ function formatTimeAgo(timestamp) {
   const diffDays = Math.floor(diffHours / 24);
 
   if (diffMinutes < 1) {
-    return 'Vừa xong';
+    return 'たった今';
   }
   if (diffMinutes < 60) {
-    return `${diffMinutes} phút trước`;
+    return `${diffMinutes}分前`;
   }
   if (diffHours < 24) {
-    return `${diffHours} giờ trước`;
+    return `${diffHours}時間前`;
   }
   if (diffDays === 1) {
-    const timeStr = date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-    return `Hôm qua lúc ${timeStr}`;
+    const timeStr = date.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    return `昨日 ${timeStr}`;
   }
   if (diffDays < 7) {
-    return `${diffDays} ngày trước`;
+    return `${diffDays}日前`;
   }
 
   const day = date.getDate();
-  const month = vietnameseMonths[date.getMonth()];
-  const time = date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-  return `${day} ${month} lúc ${time}`;
+  const month = japaneseMonths[date.getMonth()];
+  const time = date.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+  return `${month}${day}日 ${time}`;
 }
 
 /**
- * Format timestamp dạng ngày: "Hôm nay", "Hôm qua", "Tuần trước"
+ * タイムスタンプを日付形式でフォーマット: "今日", "昨日", "先週"
  */
 function formatDate(timestamp) {
   const date = toValidDate(timestamp);
   if (!date) {
-    return 'Hôm nay';
+    return '今日';
   }
 
   const now = new Date();
   const diffMs = now - date;
   if (diffMs <= 0) {
-    return 'Hôm nay';
+    return '今日';
   }
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
   if (diffDays === 0) {
-    return 'Hôm nay';
+    return '今日';
   }
   if (diffDays === 1) {
-    return 'Hôm qua';
+    return '昨日';
   }
   if (diffDays < 7) {
-    return `${diffDays} ngày trước`;
+    return `${diffDays}日前`;
   }
   if (diffDays < 30) {
     const weeks = Math.floor(diffDays / 7);
-    return weeks === 1 ? 'Tuần trước' : `${weeks} tuần trước`;
+    return weeks === 1 ? '先週' : `${weeks}週間前`;
   }
 
   const day = date.getDate();
-  const month = vietnameseMonths[date.getMonth()];
-  return `${day} ${month}`;
+  const month = japaneseMonths[date.getMonth()];
+  return `${month}${day}日`;
 }
 
 /**
- * Format timestamp dạng chuẩn ISO
+ * ISO形式でタイムスタンプをフォーマット
  */
 function formatISO(timestamp) {
   const date = toValidDate(timestamp) || new Date();
@@ -106,7 +106,7 @@ function formatISO(timestamp) {
 }
 
 /**
- * Format timestamp dạng tùy chỉnh
+ * カスタム形式でタイムスタンプをフォーマット
  */
 function formatCustom(timestamp, format = 'DD/MM/YYYY HH:mm') {
   const date = toValidDate(timestamp) || new Date();

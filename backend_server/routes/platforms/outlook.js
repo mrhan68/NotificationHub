@@ -6,9 +6,9 @@ module.exports = createMockPlatformRouter({
   samples: [
     {
       id: 'outlook-mock-1',
-      from: 'Phòng nhân sự',
+      from: '人事部',
       subject: 'Interview Schedule',
-      bodyPreview: 'Lịch phỏng vấn tuần này đã được cập nhật. Vui lòng kiểm tra.',
+      bodyPreview: '今週の面接スケジュールが更新されました。ご確認ください。',
       receivedDateTime: '2026-06-02T10:00:00.000Z',
       isRead: true
     },
@@ -16,7 +16,7 @@ module.exports = createMockPlatformRouter({
       id: 'outlook-mock-2',
       from: 'Project Office',
       subject: 'Weekly Summary',
-      bodyPreview: 'Bản tổng kết tuần đã được gửi tới hộp thư của bạn.',
+      bodyPreview: '週次サマリーがメールボックスに送信されました。',
       receivedDateTime: '2026-06-02T08:05:00.000Z',
       isRead: false
     },
@@ -24,7 +24,7 @@ module.exports = createMockPlatformRouter({
       id: 'outlook-mock-3',
       from: 'Security Team',
       subject: 'Account Verification',
-      bodyPreview: 'Vui lòng xác minh tài khoản để hoàn tất cấu hình bảo mật.',
+      bodyPreview: 'セキュリティ設定を完了するためにアカウントを確認してください。',
       receivedDateTime: '2026-06-01T17:40:00.000Z',
       isRead: false
     }

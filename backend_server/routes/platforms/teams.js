@@ -6,9 +6,9 @@ module.exports = createMockPlatformRouter({
   samples: [
     {
       id: 'teams-mock-1',
-      from: { displayName: 'Nguyễn Văn A' },
+      from: { displayName: '田中 太郎' },
       subject: 'AI Vision Meeting',
-      body: { content: 'Bạn được nhắc đến trong cuộc họp AI Vision.' },
+      body: { content: 'AI Visionミーティングであなたへの言及がありました。' },
       createdDateTime: '2026-06-02T08:30:00.000Z',
       read: false
     },
@@ -16,7 +16,7 @@ module.exports = createMockPlatformRouter({
       id: 'teams-mock-2',
       from: { displayName: 'Product Owner' },
       subject: 'Sprint Review',
-      body: { content: 'Kết quả sprint review đã được cập nhật trong kênh dự án.' },
+      body: { content: 'スプリントレビューの結果がプロジェクトチャンネルに更新されました。' },
       createdDateTime: '2026-06-02T06:15:00.000Z',
       read: true
     },
@@ -24,7 +24,7 @@ module.exports = createMockPlatformRouter({
       id: 'teams-mock-3',
       from: { displayName: 'HR Team' },
       subject: 'Onboarding Checklist',
-      body: { content: 'Danh sách onboarding cho nhân sự mới đã sẵn sàng.' },
+      body: { content: '新入社員向けのオンボーディングチェックリストが用意されました。' },
       createdDateTime: '2026-06-01T14:20:00.000Z',
       read: false
     }
