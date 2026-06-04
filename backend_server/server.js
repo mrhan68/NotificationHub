@@ -14,7 +14,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    /https:\/\/.*\.github\.io$/,  // GitHub Pages (any username)
+    'http://localhost:3000',
+    'http://localhost:5500',       // VS Code Live Server
+    'http://127.0.0.1:5500',
+    'http://localhost:5000',
+  ],
+  credentials: true
+}));
 // Preserve raw body for signature verification (Slack, Zalo)
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf && buf.toString(); } }));
 app.use(express.urlencoded({ extended: true }));

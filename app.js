@@ -1,7 +1,9 @@
 /* =========================
    DATA INITIALIZATION
 ========================= */
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://localhost:5000/api"
+  : "https://notificationhub-backend.onrender.com/api";
 
 const apps = [
   { id: "teams", name: "Teams", color: "#6264a7", connected: true },
